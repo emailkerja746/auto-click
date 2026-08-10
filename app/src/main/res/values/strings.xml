@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">AutoClick</string>
+    <string name="accessibility_service_description">
+        Mengizinkan AutoClick melakukan klik otomatis di layar sesuai pengaturan yang kamu buat.
+    </string>
+</resources>
