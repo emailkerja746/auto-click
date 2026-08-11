@@ -54,6 +54,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<android.widget.Button>(R.id.btnPickPoint).setOnClickListener {
+            if (!Settings.canDrawOverlays(this)) {
+                Toast.makeText(
+                    this,
+                    "Izinkan overlay dulu (langkah 2)",
+                    Toast.LENGTH_LONG
+                ).show()
+                return@setOnClickListener
+            }
+            Toast.makeText(
+                this,
+                "Buka game/app target, lalu geser crosshair ke titik yang mau diklik",
+                Toast.LENGTH_LONG
+            ).show()
+            startService(Intent(this, PointPickerOverlayService::class.java))
+            moveTaskToBack(true)
+        }
+
         findViewById<android.widget.Button>(R.id.btnStart).setOnClickListener {
             if (ClickAccessibilityService.instance == null) {
                 Toast.makeText(
@@ -75,6 +93,20 @@ class MainActivity : AppCompatActivity() {
             val projectionManager =
                 getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
             screenCaptureLauncher.launch(projectionManager.createScreenCaptureIntent())
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val prefs = getSharedPreferences("autoclick_prefs", MODE_PRIVATE)
+        val ready = prefs.getBoolean("picked_ready", false)
+        if (ready) {
+            val x = prefs.getFloat("picked_x", 0f)
+            val y = prefs.getFloat("picked_y", 0f)
+            etClickX.setText(x.toInt().toString())
+            etClickY.setText(y.toInt().toString())
+            prefs.edit().putBoolean("picked_ready", false).apply()
+            Toast.makeText(this, "Titik klik tersimpan: ($x, $y)", Toast.LENGTH_SHORT).show()
         }
     }
 
