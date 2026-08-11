@@ -41,6 +41,13 @@
         android:hint="Koordinat Y klik (misal 800)"
         android:inputType="number" />
 
+    <Button
+        android:id="@+id/btnPickPoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="📍 Pilih Titik Langsung di Layar" />
+
     <EditText
         android:id="@+id/etInterval"
         android:layout_width="match_parent"
