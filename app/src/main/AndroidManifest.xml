@@ -41,6 +41,11 @@
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
 
+        <!-- Overlay Service: crosshair untuk pilih titik klik -->
+        <service
+            android:name=".PointPickerOverlayService"
+            android:exported="false" />
+
     </application>
 
 </manifest>
